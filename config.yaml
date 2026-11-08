@@ -5,6 +5,10 @@ display:
   width: 1920
   height: 1080
   fullscreen: true
+  # Bildschirmausrichtung: "landscape" (Querformat) oder "portrait" (Hochformat)
+  # Für Hochformat width und height tauschen, z.B. width: 1080, height: 1920
+  # Zusätzlich in /boot/config.txt: display_rotate=1 (90°) oder display_rotate=3 (270°)
+  orientation: "landscape"
   # Anteil des Bildschirms für die Fotoanzeige (oberes Drittel)
   image_area_ratio: 0.33
 
@@ -44,10 +48,14 @@ persons:
     column: 4
 
 ui:
-  # Schriftgrößen
+  # Schriftgrößen – im Hochformat können diese größer gewählt werden
   font_size_date_overlay: 24
   font_size_table_header: 14
   font_size_table_cell: 12
+  # Für Hochformat (portrait) empfohlene Werte:
+  # font_size_date_overlay: 28
+  # font_size_table_header: 16
+  # font_size_table_cell: 14
   # Farben (Hex)
   color_row_normal: "#FFFFFF"
   color_row_light_red: "#FFCCCC"

@@ -41,9 +41,9 @@ Ein digitales Familien-Dashboard für den Raspberry Pi mit Touchscreen. Die Anwe
 
 ## Voraussetzungen
 
-- Raspberry Pi 4 (mind. 2 GB RAM)
+- Raspberry Pi 4 oder **Raspberry Pi 5** (mind. 2 GB RAM) – Pi 5 empfohlen
 - Raspberry Pi OS (64-bit empfohlen)
-- Touchscreen-Monitor
+- Touchscreen-Monitor (Quer- oder **Hochformat**)
 - Python 3.11+
 - Google-Konto mit Kalender-Zugriff
 
@@ -98,7 +98,33 @@ python src/main.py
 
 ---
 
-## Autostart mit systemd
+## Display-Ausrichtung (Hoch- oder Querformat)
+
+Die App unterstützt beide Ausrichtungen. Das Hochformat eignet sich besonders gut – das Foto wirkt wie ein digitaler Bilderrahmen, und die Wochenansicht bekommt mehr Platz.
+
+**Querformat (Standard):** `width: 1920, height: 1080`
+
+**Hochformat:** Werte tauschen und Rotation im Betriebssystem aktivieren:
+
+1. In `config.yaml` anpassen:
+```yaml
+display:
+  orientation: "portrait"
+  width: 1080
+  height: 1920
+  font_size_date_overlay: 28   # optional größer
+```
+
+2. In `/boot/config.txt` (einmalig, Raspberry Pi OS):
+```
+display_rotate=1   # 90° im Uhrzeigersinn
+# oder
+display_rotate=3   # 270° (je nach Montagerichtung)
+```
+
+3. Pi neu starten – PyQt5 übernimmt die gedrehten Dimensionen automatisch.
+
+---
 
 Damit die Anwendung automatisch beim Systemstart läuft:
 

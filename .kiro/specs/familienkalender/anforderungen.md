@@ -68,6 +68,8 @@ Die Wochenansicht zeigt 6 Spalten:
 | FA-33 | Aktualisierungsintervall für Kalender ist konfigurierbar. |
 | FA-34 | Feiertags-Bundesland ist konfigurierbar (Standard: Hessen). |
 | FA-35 | Bildschirmauflösung und UI-Skalierung sind konfigurierbar (für verschiedene Touchscreen-Größen). |
+| FA-36 | Der Bildschirm kann im **Hochformat (Portrait)** oder **Querformat (Landscape)** betrieben werden. Die Ausrichtung ist konfigurierbar. |
+| FA-37 | Im Hochformat bleibt die Aufteilung (Foto oben, Kalender unten) erhalten. Schriftgrößen und Spaltenbreiten passen sich automatisch an die Bildschirmbreite an. |
 
 ---
 
@@ -75,7 +77,7 @@ Die Wochenansicht zeigt 6 Spalten:
 
 | ID | Anforderung |
 |----|-------------|
-| NFA-01 | Die Anwendung läuft stabil auf einem Raspberry Pi 4 (mind. 2 GB RAM). |
+| NFA-01 | Die Anwendung läuft stabil auf einem Raspberry Pi 4 oder Raspberry Pi 5 (mind. 2 GB RAM). |
 | NFA-02 | Die Anwendung startet automatisch beim Systemstart (systemd-Service). |
 | NFA-03 | Touch-Interaktion muss reaktionsschnell sein (< 200 ms Reaktionszeit). |
 | NFA-04 | Die Anwendung läuft im Vollbildmodus ohne Fensterrahmen. |
@@ -115,3 +117,38 @@ Die Wochenansicht zeigt 6 Spalten:
 - Die Feiertags-Logik unterscheidet zwischen „frei" und „nicht frei" gemäß Hessischem Kalender.
 - Bildformat: JPG und PNG werden unterstützt.
 - Maximale Bildanzahl im Verzeichnis: unbegrenzt.
+
+---
+
+## 6. Hardware-Kompatibilität und Display-Ausrichtung
+
+### Unterstützte Hardware
+
+| Hardware | Unterstützt | Hinweis |
+|----------|-------------|---------|
+| Raspberry Pi 4 (2/4/8 GB) | ✅ | Empfohlen, gut getestet |
+| Raspberry Pi 5 (2/4/8 GB) | ✅ | Empfohlen – bessere Performance, schnelleres HDMI |
+| Raspberry Pi 3B+ | ⚠️ | Eingeschränkt – kann bei großen Bildern träge sein |
+
+### Display-Ausrichtung
+
+Die App unterstützt beide Ausrichtungen. Die Konfiguration erfolgt in `config.yaml`:
+
+```yaml
+display:
+  orientation: "landscape"   # oder "portrait"
+  width: 1920
+  height: 1080
+```
+
+**Querformat (Landscape)** – Standard  
+Typische Auflösung: 1920×1080 oder 1280×800
+
+**Hochformat (Portrait)** – Empfohlen für Bilderrahmen-Optik  
+Typische Auflösung: 1080×1920 oder 800×1280
+
+- Das Foto wirkt im Hochformat natürlicher (wie ein digitaler Bilderrahmen)
+- Die Wochenansicht gewinnt mehr vertikalen Platz für Termine
+- Breite und Höhe in `config.yaml` einfach tauschen
+- Betriebssystem-Rotation: in `/boot/config.txt` `display_rotate=1` (90°) oder `display_rotate=3` (270°) eintragen
+- PyQt5 bekommt die gedrehten Dimensionen automatisch – keine Code-Änderung nötig
