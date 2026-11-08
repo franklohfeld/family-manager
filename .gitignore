@@ -1,0 +1,39 @@
+# Lokale Konfiguration mit echten Personennamen – niemals einchecken
+config.local.yaml
+
+# Google API Zugangsdaten
+credentials.json
+token.json
+*.token.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Test-Artefakte
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Lokaler App-State (Bildrotations-Index, Kalender-Cache)
+image_state.json
+calendar_cache.json

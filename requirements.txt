@@ -1,0 +1,10 @@
+PyQt5==5.15.10
+google-api-python-client==2.108.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.1.0
+holidays==0.42
+python-dotenv==1.0.0
+PyYAML==6.0.1
+pytest==7.4.3
+pytest-qt==4.2.0
+pytest-mock==3.12.0

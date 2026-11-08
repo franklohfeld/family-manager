@@ -1,0 +1,57 @@
+# Standardkonfiguration – wird ins Repository eingecheckt
+# Sensible Daten (Personennamen, API-Keys) gehören in config.local.yaml
+
+display:
+  width: 1920
+  height: 1080
+  fullscreen: true
+  # Anteil des Bildschirms für die Fotoanzeige (oberes Drittel)
+  image_area_ratio: 0.33
+
+images:
+  directory: "~/Bilder/familienkalender"
+  state_file: "~/.family-calendar/image_state.json"
+  fallback_image: "assets/default_image.png"
+  # Unterstützte Dateiformate
+  supported_formats:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+
+calendar:
+  # Aktualisierungsintervall in Minuten
+  refresh_interval_minutes: 15
+  cache_file: "~/.family-calendar/calendar_cache.json"
+  credentials_file: "~/.family-calendar/credentials.json"
+  token_file: "~/.family-calendar/token.json"
+  # Wie viele Wochen voraus/zurück geladen werden
+  lookahead_weeks: 4
+  lookbehind_weeks: 1
+
+holidays:
+  # Bundesland für Feiertage (HE = Hessen)
+  state: "HE"
+
+# Personenkonfiguration – Anzeigenamen und Kalender-Labels in config.local.yaml
+persons:
+  - key: "PERSON_A"
+    column: 1
+  - key: "PERSON_B"
+    column: 2
+  - key: "PERSON_C"
+    column: 3
+  - key: "PERSON_D"
+    column: 4
+
+ui:
+  # Schriftgrößen
+  font_size_date_overlay: 24
+  font_size_table_header: 14
+  font_size_table_cell: 12
+  # Farben (Hex)
+  color_row_normal: "#FFFFFF"
+  color_row_light_red: "#FFCCCC"
+  color_row_dark_red: "#FF6666"
+  color_cell_vacation: "#FF9999"
+  color_overlay_background: "rgba(0, 0, 0, 160)"
+  color_overlay_text: "#FFFFFF"

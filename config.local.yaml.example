@@ -1,0 +1,23 @@
+# Lokale Konfiguration – Vorlage
+# Kopiere diese Datei nach config.local.yaml und trage die echten Werte ein.
+# config.local.yaml wird NICHT ins Repository eingecheckt.
+
+persons:
+  - key: "PERSON_A"
+    display_name: "Vorname1"
+    calendar_label: "Google-Kalender-Label-oder-Farbe-1"
+  - key: "PERSON_B"
+    display_name: "Vorname2"
+    calendar_label: "Google-Kalender-Label-oder-Farbe-2"
+  - key: "PERSON_C"
+    display_name: "Vorname3"
+    calendar_label: "Google-Kalender-Label-oder-Farbe-3"
+  - key: "PERSON_D"
+    display_name: "Vorname4"
+    calendar_label: "Google-Kalender-Label-oder-Farbe-4"
+
+# Optional: Pfad-Überschreibungen
+# images:
+#   directory: "/mnt/usb/fotos"
+# calendar:
+#   refresh_interval_minutes: 30
