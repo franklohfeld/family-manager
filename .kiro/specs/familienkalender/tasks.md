@@ -6,12 +6,51 @@ Implementierung einer Touchscreen-Kalenderanwendung für den Raspberry Pi 4 mit 
 
 ## Task Dependency Graph
 
-```
-1 → 2 → 3 → 4
-        ↓
-        5 → 6 → 7 → 8
-                ↓
-                9 → 10 → 11 → 12 → 13 → 14 → 15 → 16 → 17
+```json
+{
+  "waves": [
+    {
+      "wave": 1,
+      "tasks": ["1"]
+    },
+    {
+      "wave": 2,
+      "tasks": ["2", "3", "4"]
+    },
+    {
+      "wave": 3,
+      "tasks": ["5", "7"]
+    },
+    {
+      "wave": 4,
+      "tasks": ["6", "8"]
+    },
+    {
+      "wave": 5,
+      "tasks": ["9", "10", "11", "12"]
+    },
+    {
+      "wave": 6,
+      "tasks": ["13"]
+    },
+    {
+      "wave": 7,
+      "tasks": ["14"]
+    },
+    {
+      "wave": 8,
+      "tasks": ["15"]
+    },
+    {
+      "wave": 9,
+      "tasks": ["16"]
+    },
+    {
+      "wave": 10,
+      "tasks": ["17"]
+    }
+  ]
+}
 ```
 
 ## Tasks
