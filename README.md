@@ -41,7 +41,7 @@ Ein digitales Familien-Dashboard für den Raspberry Pi mit Touchscreen. Die Anwe
 
 ## Voraussetzungen
 
-- Raspberry Pi 4 oder **Raspberry Pi 5** (mind. 2 GB RAM) – Pi 5 empfohlen
+- Raspberry Pi 4 (mind. 2 GB RAM, 4 GB empfohlen)
 - Raspberry Pi OS (64-bit empfohlen)
 - Touchscreen-Monitor (Quer- oder **Hochformat**)
 - Python 3.11+

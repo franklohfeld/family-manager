@@ -77,7 +77,7 @@ Die Wochenansicht zeigt 6 Spalten:
 
 | ID | Anforderung |
 |----|-------------|
-| NFA-01 | Die Anwendung läuft stabil auf einem Raspberry Pi 4 oder Raspberry Pi 5 (mind. 2 GB RAM). |
+| NFA-01 | Die Anwendung läuft stabil auf einem Raspberry Pi 4 (mind. 2 GB RAM). |
 | NFA-02 | Die Anwendung startet automatisch beim Systemstart (systemd-Service). |
 | NFA-03 | Touch-Interaktion muss reaktionsschnell sein (< 200 ms Reaktionszeit). |
 | NFA-04 | Die Anwendung läuft im Vollbildmodus ohne Fensterrahmen. |
@@ -127,7 +127,7 @@ Die Wochenansicht zeigt 6 Spalten:
 | Hardware | Unterstützt | Hinweis |
 |----------|-------------|---------|
 | Raspberry Pi 4 (2/4/8 GB) | ✅ | Empfohlen, gut getestet |
-| Raspberry Pi 5 (2/4/8 GB) | ✅ | Empfohlen – bessere Performance, schnelleres HDMI |
+| Raspberry Pi 5 (2/4/8 GB) | ✅ | Ebenfalls unterstützt – bessere Performance |
 | Raspberry Pi 3B+ | ⚠️ | Eingeschränkt – kann bei großen Bildern träge sein |
 
 ### Display-Ausrichtung
