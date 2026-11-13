@@ -51,7 +51,11 @@ Ein digitales Familien-Dashboard für den Raspberry Pi mit Touchscreen. Die Anwe
 
 ## Installation
 
-### 1. Repository klonen
+Eine ausführliche Schritt-für-Schritt-Anleitung speziell für den Raspberry Pi 4 findest du hier:
+
+**[→ docs/installation-raspberry-pi4.md](docs/installation-raspberry-pi4.md)**
+
+Kurzfassung:
 
 ```bash
 git clone https://github.com/franklohfeld/family-manager.git
