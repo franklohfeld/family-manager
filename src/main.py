@@ -10,10 +10,10 @@ from pathlib import Path
 # Projekt-Root zum Python-Pfad hinzufügen (für Imports aus src/)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication  # noqa: E402
 
-from src.app import FamilyCalendarApp
-from src.utils.config import get_config
+from src.app import FamilyCalendarApp  # noqa: E402
+from src.utils.config import get_config  # noqa: E402
 
 # Logging konfigurieren
 logging.basicConfig(

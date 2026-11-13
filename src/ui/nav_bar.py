@@ -131,6 +131,8 @@ class NavBar(QWidget):
         }
         for view, btn in buttons.items():
             if view == self._current_view:
-                btn.setStyleSheet("QPushButton { font-weight: bold; background-color: #4A90D9; color: white; }")
+                btn.setStyleSheet(
+                    "QPushButton { font-weight: bold; background-color: #4A90D9; color: white; }"
+                )
             else:
                 btn.setStyleSheet("")
