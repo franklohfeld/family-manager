@@ -8,12 +8,11 @@ import logging
 
 from PyQt5.QtWidgets import QStackedWidget, QVBoxLayout, QWidget
 
-from src.models.person import Person
 from src.services.calendar_service import CalendarService
 from src.services.holiday_service import HolidayService
 from src.ui.list_view import ListView
 from src.ui.month_view import MonthView
-from src.ui.nav_bar import NavBar, VIEW_WEEK, VIEW_MONTH, VIEW_LIST
+from src.ui.nav_bar import NavBar, VIEW_WEEK, VIEW_MONTH
 from src.ui.week_view import WeekView
 from src.utils.date_utils import format_week_header, format_month_header
 

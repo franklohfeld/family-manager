@@ -19,7 +19,6 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from src.models.person import Person
 from src.services.calendar_service import CalendarService
 from src.services.holiday_service import HolidayService
 from src.utils.color_logic import get_row_color

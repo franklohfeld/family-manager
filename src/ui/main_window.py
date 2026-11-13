@@ -9,7 +9,6 @@ import logging
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QVBoxLayout, QWidget
 
-from src.models.person import Person
 from src.services.calendar_service import CalendarService
 from src.services.holiday_service import HolidayService
 from src.services.image_service import ImageService

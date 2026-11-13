@@ -9,9 +9,9 @@ from datetime import date
 from pathlib import Path
 from typing import Optional
 
-from PyQt5.QtCore import Qt, QTimer, QDate
-from PyQt5.QtGui import QPixmap, QPainter, QColor, QFont, QPen
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QSizePolicy
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QPixmap, QPainter, QColor, QFont
+from PyQt5.QtWidgets import QWidget, QSizePolicy
 
 from src.utils.date_utils import format_date_display, format_kw_overlay
 

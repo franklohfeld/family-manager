@@ -5,7 +5,7 @@ und verwaltet die automatischen Timer.
 """
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from PyQt5.QtCore import QTimer
 

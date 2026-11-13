@@ -6,7 +6,6 @@ Zeigt alle Ereignisse chronologisch sortiert mit Gruppenheadern pro Tag.
 import logging
 from datetime import date, timedelta
 
-from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import (
     QAbstractItemView,
@@ -17,12 +16,10 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from src.models.event import Event
-from src.models.person import Person
 from src.services.calendar_service import CalendarService
 from src.services.holiday_service import HolidayService
 from src.utils.color_logic import get_row_color, get_cell_color
-from src.utils.date_utils import format_date_short, get_week_start
+from src.utils.date_utils import format_date_short
 
 logger = logging.getLogger(__name__)
 

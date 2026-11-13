@@ -5,7 +5,6 @@ Lädt config.yaml (Standardwerte) und mergt mit config.local.yaml (lokale Übers
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 from typing import Any
 

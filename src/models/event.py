@@ -4,7 +4,6 @@ Datenmodell für einen Kalender-Termin.
 
 from dataclasses import dataclass, field
 from datetime import datetime, date
-from typing import Optional
 
 
 # Schlüsselwörter im Termintitel, die auf Urlaub oder freien Tag hinweisen
