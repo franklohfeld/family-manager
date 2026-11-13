@@ -1,186 +1,125 @@
-# Implementierungs-Aufgabenliste – Familienkalender auf Raspberry Pi
+# Implementation Plan: Familienkalender auf Raspberry Pi
 
-## Legende
-- [ ] = Offen
-- [x] = Erledigt
-- Abhängigkeiten sind jeweils angegeben
+## Overview
 
----
+Implementierung einer Touchscreen-Kalenderanwendung für den Raspberry Pi 4 mit rotierender Fotoanzeige und Google-Calendar-basiertem Familienplaner. Die Umsetzung erfolgt in 6 Phasen: Projektstruktur, Services, Datenmodelle, UI-Komponenten, Integration und Deployment.
 
-## Phase 1: Projektgrundlage
+## Task Dependency Graph
 
-### Task 1.1 – Projektstruktur anlegen
-- [x] Verzeichnisstruktur gemäß Designdokument erstellen
-- [x] `README.md` mit Projektbeschreibung und Setup-Anleitung verfassen
-- [x] `.gitignore` anlegen (inkl. `config.local.yaml`, `token.json`, `credentials.json`, `__pycache__`, `.env`)
-- [x] `config.local.yaml.example` anlegen
-- [x] `requirements.txt` erstellen
-- [x] `setup.py` erstellen
+```
+1 → 2 → 3 → 4
+        ↓
+        5 → 6 → 7 → 8
+                ↓
+                9 → 10 → 11 → 12 → 13 → 14 → 15 → 16 → 17
+```
 
-**Abhängigkeiten:** –
+## Tasks
 
----
+- [x] 1. Projektstruktur anlegen
+  - Verzeichnisstruktur src/, tests/, docs/, systemd/, assets/ erstellen
+  - .gitignore, requirements.txt, setup.py, README.md anlegen
+  - config.local.yaml.example als Vorlage für lokale Konfiguration
+  - **Abhängigkeiten:** keine
 
-### Task 1.2 – Konfigurationssystem implementieren
-- [x] `config.yaml` (Standard-Konfiguration, versioniert) anlegen
-- [x] `config.local.yaml.example` anlegen
-- [x] `src/utils/config.py` implementieren
-- [x] Unit-Tests: `tests/test_config.py` – alle 13 Tests grün
+- [x] 2. Konfigurationssystem implementieren
+  - src/utils/config.py: lädt config.yaml und mergt mit config.local.yaml
+  - Tiefes Merge verschachtelter Dictionaries, Pfad-Expansion für ~
+  - Singleton get_config() und reset_config() für Tests
+  - **Abhängigkeiten:** Task 1
 
-**Abhängigkeiten:** Task 1.1
+- [x] 3. Datenmodelle implementieren
+  - src/models/event.py: Event-Dataclass mit Urlaubs-Erkennung und JSON-Serialisierung
+  - src/models/person.py: Person-Dataclass mit from_config() Fabrikmethode
+  - **Abhängigkeiten:** Task 1
 
----
+- [x] 4. DateUtils implementieren
+  - src/utils/date_utils.py: Wochenanfang, KW-Berechnung, Formatierungsfunktionen
+  - Sonntag-Mitternacht-Erkennung für Bildwechsel-Scheduler
+  - 20 Unit-Tests in tests/test_date_utils.py – alle grün
+  - **Abhängigkeiten:** Task 1
 
-## Phase 2: Services
+- [x] 5. HolidayService implementieren
+  - src/services/holiday_service.py: hessische Feiertage via holidays-Bibliothek
+  - Unterscheidung gesetzlich frei / regional nicht frei
+  - Deutsche Feiertagsnamen über Übersetzungstabelle
+  - 11 Unit-Tests in tests/test_holiday_service.py – alle grün
+  - **Abhängigkeiten:** Task 2
 
-### Task 2.1 – `HolidayService` implementieren
-- [x] `src/services/holiday_service.py` implementieren
-- [x] `holidays`-Bibliothek für Hessen (`HE`) einbinden (subdiv-API)
-- [x] Deutsche Feiertagsnamen über Übersetzungstabelle
-- [x] `is_public_holiday(d)`, `is_regional_holiday(d)`, `get_holiday_name(d)`
-- [x] Unit-Tests: `tests/test_holiday_service.py` – alle 11 Tests grün
+- [x] 6. ColorLogic implementieren
+  - src/utils/color_logic.py: Zeilenfarbe (Samstag/Sonntag/Feiertag) und Zellfarbe (Urlaub/Frei)
+  - Farbkonstanten: NORMAL=#FFFFFF, LIGHT_RED=#FFCCCC, DARK_RED=#FF6666, VACATION=#FF9999
+  - 10 Unit-Tests in tests/test_color_logic.py – alle grün
+  - **Abhängigkeiten:** Task 5
 
-**Abhängigkeiten:** Task 1.2
+- [x] 7. ImageService implementieren
+  - src/services/image_service.py: Bildrotation mit persistentem JSON-State
+  - Neustart von vorn nach letztem Bild, Fallback bei leerem Verzeichnis
+  - 9 Unit-Tests in tests/test_image_service.py – alle grün
+  - **Abhängigkeiten:** Task 2
 
----
+- [x] 8. CalendarService implementieren
+  - src/services/calendar_service.py: Google Calendar API mit OAuth2
+  - Graceful Fallback auf lokalen Cache wenn API nicht verfügbar
+  - Personenzuordnung via Kalender-Label, Urlaubs-Erkennung im Titel
+  - 13 Unit-Tests in tests/test_calendar_service.py – alle grün
+  - **Abhängigkeiten:** Task 2, Task 3
 
-### Task 2.2 – `ColorLogic` implementieren
-- [x] `src/utils/color_logic.py` implementieren
-- [x] `get_row_color()`, `get_cell_color()`, `should_highlight_row()`
-- [x] Unit-Tests: `tests/test_color_logic.py` – alle 10 Tests grün
+- [x] 9. ImageWidget implementieren
+  - src/ui/image_widget.py: skalierte Bildanzeige mit QPainter-Overlay
+  - Transparentes Datums-Overlay mit Wochentag, Datum und Kalenderwoche
+  - Automatische tägliche Datumsaktualisierung via QTimer
+  - **Abhängigkeiten:** Task 7
 
-**Abhängigkeiten:** Task 2.1
+- [x] 10. WeekView implementieren
+  - src/ui/week_view.py: 6-Spalten-Tabelle (Datum, 4 Personen, Allgemein)
+  - Zeilenfärbung via ColorLogic, Zellfärbung für Urlaubs-Events
+  - Touch-freundliche Zeilenhöhe, Navigation vor/zurück/heute
+  - **Abhängigkeiten:** Task 6, Task 8
 
----
+- [x] 11. MonthView implementieren
+  - src/ui/month_view.py: Monatsraster 7×6 mit kompakten Ereignis-Chips
+  - Feiertags- und Wochenend-Färbung, Personenkürzel als Präfix
+  - **Abhängigkeiten:** Task 6, Task 8
 
-### Task 2.3 – `ImageService` implementieren
-- [x] `src/services/image_service.py` implementieren
-- [x] State-Datei laden/speichern, Bildrotation, Neustart von vorn nach letztem Bild
-- [x] Unit-Tests: `tests/test_image_service.py` – alle 9 Tests grün
+- [x] 12. ListView implementieren
+  - src/ui/list_view.py: chronologische QTreeWidget-Ansicht mit Tages-Gruppen
+  - Urlaubs-Zellfärbung, Personenname als dritte Spalte
+  - **Abhängigkeiten:** Task 8
 
-**Abhängigkeiten:** Task 1.2
+- [x] 13. NavBar und CalendarWidget implementieren
+  - src/ui/nav_bar.py: Navigationsleiste mit Qt-Signalen (vor/zurück, Ansichtswechsel)
+  - src/ui/calendar_widget.py: QStackedWidget-Container koordiniert alle drei Ansichten
+  - **Abhängigkeiten:** Task 10, Task 11, Task 12
 
----
+- [x] 14. MainWindow implementieren
+  - src/ui/main_window.py: QMainWindow mit QSplitter (Foto oben, Kalender unten)
+  - Vollbildmodus, konfigurierbare Aufteilung (Standard: 1/3 Foto, 2/3 Kalender)
+  - **Abhängigkeiten:** Task 9, Task 13
 
-### Task 2.4 – `CalendarService` implementieren
-- [x] `src/services/calendar_service.py` implementieren
-- [x] Google Calendar API Anbindung mit graceful Fallback wenn nicht installiert
-- [x] Cache, Personenzuordnung, Urlaubs-Erkennung
-- [x] Unit-Tests: `tests/test_calendar_service.py` – alle 13 Tests grün
+- [x] 15. App-Integration implementieren
+  - src/app.py: initialisiert alle Services, verbindet UI mit Services
+  - QTimer für Kalender-Refresh (alle 15 Min) und Bildwechsel-Prüfung (jede Minute)
+  - src/main.py: Einstiegspunkt mit Logging und Fehlerbehandlung
+  - **Abhängigkeiten:** Task 14
 
-**Abhängigkeiten:** Task 1.2
+- [x] 16. Deployment-Dateien erstellen
+  - systemd/family-calendar.service: Autostart-Service für Raspberry Pi OS
+  - docs/installation-raspberry-pi4.md: vollständige Installations-Anleitung (12 Schritte)
+  - docs/google-calendar-setup.md: OAuth2-Einrichtung Schritt für Schritt
+  - **Abhängigkeiten:** Task 15
 
----
+- [x] 17. CI/CD und Tests abschließen
+  - .github/workflows/ci.yml: GitHub Actions mit Linting (flake8) und pytest
+  - tests/test_config.py: 13 Tests für Konfigurationslader
+  - Gesamt: 86/86 Tests grün, 0 Linter-Warnings
+  - **Abhängigkeiten:** Task 16
 
-### Task 2.5 – `DateUtils` implementieren
-- [x] `src/utils/date_utils.py` implementieren
-- [x] Unit-Tests: `tests/test_date_utils.py` – alle 20 Tests grün
+## Notes
 
-**Abhängigkeiten:** Task 1.1
-
----
-
-## Phase 3: Datenmodelle
-
-### Task 3.1 – Datenmodelle implementieren
-- [x] `src/models/event.py` – `Event`-Dataclass mit Serialisierung
-- [x] `src/models/person.py` – `Person`-Dataclass
-
-**Abhängigkeiten:** Task 1.1
-
----
-
-## Phase 4: UI-Komponenten
-
-### Task 4.1 – Hauptfenster (`MainWindow`) implementieren
-- [x] `src/ui/main_window.py` – QMainWindow mit Splitter-Layout
-- [x] Vollbildmodus, konfigurierbare Größenverhältnisse
-
-**Abhängigkeiten:** Task 1.2
-
----
-
-### Task 4.2 – `ImageWidget` implementieren
-- [x] `src/ui/image_widget.py` – Bildskalierung + Datums-Overlay mit QPainter
-- [ ] UI-Test: `tests/test_image_widget.py` (pytest-qt, benötigt PyQt5 auf Testrechner)
-
-**Abhängigkeiten:** Task 2.3, Task 4.1
-
----
-
-### Task 4.3 – `WeekView` implementieren
-- [x] `src/ui/week_view.py` – 6-Spalten-Tabelle mit Farblogik
-- [ ] UI-Test: `tests/test_week_view.py` (pytest-qt, benötigt PyQt5 auf Testrechner)
-
-**Abhängigkeiten:** Task 2.2, Task 2.4, Task 3.1, Task 4.1
-
----
-
-### Task 4.4 – `MonthView` implementieren
-- [x] `src/ui/month_view.py` – Monatsraster mit Ereignis-Chips
-
-**Abhängigkeiten:** Task 2.2, Task 2.4, Task 4.1
-
----
-
-### Task 4.5 – `ListView` implementieren
-- [x] `src/ui/list_view.py` – chronologische Listenansicht mit QTreeWidget
-
-**Abhängigkeiten:** Task 2.4, Task 3.1, Task 4.1
-
----
-
-### Task 4.6 – `NavBar` und `CalendarWidget` implementieren
-- [x] `src/ui/nav_bar.py` – Navigationsleiste mit Signalen
-- [x] `src/ui/calendar_widget.py` – QStackedWidget-Container
-
-**Abhängigkeiten:** Task 4.3, Task 4.4, Task 4.5
-
----
-
-## Phase 5: Integration & Hauptprogramm
-
-### Task 5.1 – `main.py` implementieren
-- [x] `src/main.py` – Einstiegspunkt mit Logging und Fehlerbehandlung
-
-### Task 5.2 – `app.py` implementieren
-- [x] `src/app.py` – Koordination aller Services und Timer (Kalender-Refresh, Bildwechsel)
-
-**Abhängigkeiten:** alle Phase-2- und Phase-4-Tasks
-
----
-
-## Phase 6: Deployment & Dokumentation
-
-### Task 6.1 – Deployment-Dateien einrichten
-- [x] `systemd/family-calendar.service` erstellt
-- [x] `docs/installation-raspberry-pi4.md` – vollständige Installations-Anleitung für Pi 4
-- [x] `README.md` mit Link zur Installations-Anleitung ergänzt
-
-### Task 6.2 – Google Calendar Setup dokumentieren
-- [x] `docs/google-calendar-setup.md` erstellt
-
-### Task 6.3 – CI/CD
-- [x] `.github/workflows/ci.yml` angelegt (Linting + Tests bei jedem Push)
-
----
-
-## Offene Punkte
-
-- [ ] UI-Tests auf dem Raspberry Pi: `tests/test_week_view.py`, `tests/test_image_widget.py`
-- [ ] Google Calendar OAuth2-Ersteinrichtung auf dem Pi durchführen
-- [ ] App auf dem Pi 4 in Betrieb nehmen und Praxistest durchführen
-
----
-
-## Gesamtergebnis
-
-| Phase | Inhalt | Status |
-|-------|--------|--------|
-| 1 | Projektstruktur + Konfiguration | ✅ Abgeschlossen |
-| 2 | Services (Holiday, Color, Image, Calendar, Date) | ✅ Abgeschlossen |
-| 3 | Datenmodelle | ✅ Abgeschlossen |
-| 4 | UI-Komponenten | ✅ Abgeschlossen |
-| 5 | Integration | ✅ Abgeschlossen |
-| 6 | Deployment + Dokumentation | ✅ Abgeschlossen |
-| **Tests gesamt** | 86/86 grün | ✅ |
+- Personennamen werden ausschließlich in config.local.yaml gespeichert (nicht versioniert)
+- Im Quellcode und allen öffentlichen Dateien werden PERSON_A bis PERSON_D als Platzhalter verwendet
+- Google Calendar wird nur lesend abgerufen (Scope: calendar.readonly)
+- Bildrotation startet nach dem letzten Bild automatisch von vorn
+- Feiertage werden mit deutschen Namen in Spalte 1 angezeigt (auch nicht-freie Feiertage)
+- Portrait- und Landscape-Modus werden unterstützt (Konfiguration via config.yaml + /boot/config.txt)
