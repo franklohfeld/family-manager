@@ -4,12 +4,14 @@ Verwaltet die wöchentliche Rotation der Fotos aus einem konfigurierten Verzeich
 Jedes Bild wird einmal gezeigt; nach dem letzten beginnt die Rotation von vorn.
 """
 
+from __future__ import annotations
+
 import json
 import logging
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 from src.utils.date_utils import get_next_sunday_midnight
 
@@ -28,7 +30,7 @@ class ImageService:
         image_dir: str,
         state_file: str,
         fallback_image: str,
-        supported_formats: list[str] | None = None,
+        supported_formats: Optional[List[str]] = None,
     ) -> None:
         """
         Initialisiert den Service.
@@ -107,7 +109,7 @@ class ImageService:
     # Private Methoden
     # -------------------------------------------------------------------------
 
-    def _get_all_images(self) -> list[Path]:
+    def _get_all_images(self) -> List[Path]:
         """
         Gibt alle unterstützten Bilder aus dem konfigurierten Verzeichnis zurück,
         sortiert nach Dateiname.

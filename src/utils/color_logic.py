@@ -4,7 +4,10 @@ Bestimmt die Hintergrundfarbe von Tabellenzeilen und -zellen
 basierend auf Wochentag, Feiertag und Termintyp.
 """
 
+from __future__ import annotations
+
 from datetime import date
+from typing import Optional
 
 from src.models.event import Event
 from src.services.holiday_service import HolidayService
@@ -44,7 +47,7 @@ def get_row_color(d: date, holiday_service: HolidayService) -> str:
     return COLOR_ROW_NORMAL
 
 
-def get_cell_color(event: Event) -> str | None:
+def get_cell_color(event: Event) -> Optional[str]:
     """
     Gibt die Hintergrundfarbe für eine einzelne Zelle zurück.
     Wird verwendet, wenn ein Termin "Urlaub" oder "Frei" im Namen enthält.

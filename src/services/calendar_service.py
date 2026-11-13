@@ -4,6 +4,8 @@ Verwaltet die Anbindung an die Google Calendar API, das lokale Caching
 und die Zuordnung von Terminen zu Personen.
 """
 
+from __future__ import annotations
+
 import json
 import logging
 import os
@@ -11,11 +13,21 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+try:
+    from google.auth.transport.requests import Request
+    from google.oauth2.credentials import Credentials
+    from google_auth_oauthlib.flow import InstalledAppFlow
+    from googleapiclient.discovery import build
+    from googleapiclient.errors import HttpError
+    _GOOGLE_AVAILABLE = True
+except ImportError:
+    # Google-Bibliotheken nicht installiert – Offline-Modus (nur Cache)
+    _GOOGLE_AVAILABLE = False
+    Request = None
+    Credentials = None
+    InstalledAppFlow = None
+    build = None
+    HttpError = Exception
 
 from src.models.event import Event
 from src.models.person import Person
@@ -118,6 +130,10 @@ class CalendarService:
         Bei Fehler wird der lokale Cache verwendet.
         Gibt True zurück bei Erfolg, False bei Fehler.
         """
+        if not _GOOGLE_AVAILABLE:
+            logger.warning("Google-Bibliotheken nicht installiert – verwende Cache.")
+            return False
+
         try:
             creds = self._get_credentials()
             if creds is None:

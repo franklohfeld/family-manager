@@ -4,6 +4,8 @@ Zeigt eine Woche in 6 Spalten: Datum, vier Personen, Allgemein.
 Farbliche Kennzeichnung gemäß Feiertags- und Urlaubslogik.
 """
 
+from __future__ import annotations
+
 import logging
 from datetime import date, timedelta
 from typing import Optional

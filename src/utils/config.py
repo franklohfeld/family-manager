@@ -3,6 +3,8 @@ Konfigurationslader für den Familienkalender.
 Lädt config.yaml (Standardwerte) und mergt mit config.local.yaml (lokale Überschreibungen).
 """
 
+from __future__ import annotations
+
 import os
 from pathlib import Path
 from typing import Any
