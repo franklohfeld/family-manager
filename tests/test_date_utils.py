@@ -4,8 +4,6 @@ Tests für Datums-Hilfsfunktionen.
 
 from datetime import date, datetime, timedelta
 
-import pytest
-
 from src.utils.date_utils import (
     format_date_display,
     format_date_short,

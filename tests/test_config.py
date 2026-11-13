@@ -2,9 +2,6 @@
 Tests für den Konfigurationslader.
 """
 
-import tempfile
-from pathlib import Path
-
 import pytest
 import yaml
 
@@ -14,7 +11,6 @@ from src.utils.config import (
     get_all_persons,
     get_person_calendar_label,
     get_person_display_name,
-    load_config,
     reset_config,
 )
 

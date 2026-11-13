@@ -3,11 +3,9 @@ Tests für den Kalender-Service.
 Verwendet Mocks für die Google API.
 """
 
-import json
 import tempfile
 from datetime import date, datetime
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 import pytest
 
